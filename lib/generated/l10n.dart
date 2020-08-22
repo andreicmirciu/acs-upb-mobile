@@ -1000,6 +1000,15 @@ class S {
     );
   }
 
+  String get navigationPeople {
+    return Intl.message(
+      'People',
+      name: 'navigationPeople',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get navigationSettings {
     return Intl.message(
       'Settings',
