@@ -56,7 +56,7 @@ packages:
       name: black_hole_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.10"
+    version: "0.2.13"
   boolean_selector:
     dependency: transitive
     description:
@@ -559,14 +559,14 @@ packages:
       name: resource
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.6"
+    version: "2.1.7"
   rxdart:
     dependency: transitive
     description:
       name: rxdart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.24.0"
+    version: "0.24.1"
   shared_preferences:
     dependency: transitive
     description:
@@ -669,14 +669,14 @@ packages:
       name: time_machine
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.12"
+    version: "0.9.13"
   timetable:
     dependency: "direct main"
     description:
       name: timetable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.0"
+    version: "0.2.6"
   typed_data:
     dependency: transitive
     description:
@@ -756,4 +756,4 @@ packages:
     version: "2.2.0"
 sdks:
   dart: ">=2.7.0 <3.0.0"
-  flutter: ">=1.12.13+hotfix.4 <2.0.0"
+  flutter: ">=1.17.0 <2.0.0"

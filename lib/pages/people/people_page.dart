@@ -21,7 +21,6 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
-
   Future _data;
 
   Future getPeople() async {
@@ -40,129 +39,154 @@ class _ListPageState extends State<ListPage> {
   Widget build(BuildContext context) {
     return Container(
       child: FutureBuilder(
-        future: _data,
-        builder: (_, snapshot) {
-
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: Text("Loading..."),
-            );
-          } else {
-            return ListView.builder(
-                itemCount: snapshot.data.length,
-                itemBuilder: (_, index) {
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        snapshot.data[index].data["photo"]
+          future: _data,
+          builder: (_, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: Text("Loading..."),
+              );
+            } else {
+              return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (_, index) {
+                    return ListTile(
+                      leading: CircleAvatar(
+                        backgroundImage:
+                            NetworkImage(snapshot.data[index].data["photo"]),
                       ),
-                    ),
-                    title: Text(snapshot.data[index].data["name"]),
-                    subtitle: Text(snapshot.data[index].data["email"]),
-                    onTap: () => navigateToDetail(snapshot.data[index]),
-                  );
-                });
-          }
-      }),
+                      title: Text(snapshot.data[index].data["name"]),
+                      subtitle: Text(snapshot.data[index].data["email"]),
+                      onTap: () => navigateToDetail(snapshot.data[index]),
+                    );
+                  });
+            }
+          }),
     );
   }
 
   navigateToDetail(DocumentSnapshot person) {
     //Navigator.push(context, MaterialPageRoute(builder: (context) => DetailPage(person: person, )));
-      showModalBottomSheet<dynamic>(
-        isScrollControlled: true,
-        context: context,
-        // TODO: Fix size for landscape
-        builder: (BuildContext buildContext) {
-          return Wrap(
-            children: <Widget>[DetailPage(
-                  person: person,
-                ),
-            ],
-          );
-        },
-      );
+    showModalBottomSheet<dynamic>(
+      isScrollControlled: true,
+      context: context,
+      // TODO: Fix size for landscape
+      builder: (BuildContext buildContext) {
+        return DetailPage(
+          person: person,
+        );
+      },
+    );
   }
 }
 
-
 class DetailPage extends StatelessWidget {
-
   final DocumentSnapshot person;
+
   DetailPage({this.person});
 
   @override
   Widget build(BuildContext context) {
-    return AppScaffold(
-      title: person.data["name"],
-      actions: [AppScaffoldAction(icon: Icons.edit)],
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: IntrinsicHeight(
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0, right: 16.0),
-                      child: person.data["photo"] != null
-                          ? CircleAvatar(
-                        maxRadius: 50,
-                        backgroundImage:
-                        CachedNetworkImageProvider(person.data["photo"]),
-                      )
-                          : CircleAvatar(
-                        radius: 50,
-                        child: Icon(
-                          Icons.person,
-                          size: 50,
-                        ),
+    return IntrinsicHeight(
+
+      child: Column(
+        children: [
+          Container(
+            decoration: new BoxDecoration(
+                shape: BoxShape.rectangle,
+                border: new Border.all(color: Colors.black, width: 20)),
+            child: RichText(
+              text: TextSpan(text: person.data["name"]),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: IntrinsicHeight(
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0, right: 16.0),
+                        child: person.data["photo"] != null
+                            ? CircleAvatar(
+                                maxRadius: 50,
+                                backgroundImage: CachedNetworkImageProvider(
+                                    person.data["photo"]),
+                              )
+                            : CircleAvatar(
+                                radius: 50,
+                                child: Icon(
+                                  Icons.person,
+                                  size: 50,
+                                ),
+                              ),
                       ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.email),
-                            SizedBox(width: 4),
-                            Text(person.data["email"] ?? '-'),
-                          ],
-                        ),
-                        SizedBox(height: 8),
-                        Row(
-                          children: [
-                            Icon(Icons.phone),
-                            SizedBox(width: 4),
-                            Text(person.data["phone"] ?? '-'),
-                          ],
-                        ),
-                        SizedBox(height: 8),
-                        Row(
-                          children: [
-                            Icon(Icons.location_on),
-                            SizedBox(width: 4),
-                            Text(person.data["office"] ?? '-'),
-                          ],
-                        ),
-                        SizedBox(height: 8),
-                        Row(
-                          children: [
-                            Icon(Icons.work),
-                            SizedBox(width: 4),
-                            Text(person.data["position"] ?? '-',),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.email),
+                              SizedBox(width: 4),
+                              RichText(
+                                  text:
+                                      TextSpan(text: person.data["email"] ?? '-'))
+                            ],
+                          ),
+                          SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Icon(Icons.phone),
+                              SizedBox(width: 4),
+                              RichText(
+                                  text:
+                                      TextSpan(text: person.data["phone"] ?? '-'))
+                            ],
+                          ),
+                          SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Icon(Icons.location_on),
+                              SizedBox(width: 4),
+                              RichText(
+                                  text: TextSpan(
+                                      text: person.data["office"] ?? '-'))
+                            ],
+                          ),
+                          SizedBox(height: 8),
+                          RichText(
+                            maxLines: 2,
+                            softWrap: true,
+                            text: TextSpan(children: [
+                              WidgetSpan(
+                                  child: Padding(
+                                padding: const EdgeInsets.only(right: 4.0),
+                                child: Icon(Icons.work),
+                              )),
+                              TextSpan(text: person.data["position"] ?? '-')
+                            ]),
+                          )
+                          /*Row(
+                              children: [
+                                Icon(Icons.work),
+                                SizedBox(width: 4),
+                                RichText(
+                                  text: TextSpan(
+                                    text: person.data["position"] ?? '-'
+                                  )
+                                )
+                              ],
+                            ),*/
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
